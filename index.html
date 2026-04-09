@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c7528b4cf7354650aec5b75cbd89323f"}'></script><!-- End Cloudflare Web Analytics -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ken Aquatic Catalog</title>
@@ -25,23 +26,38 @@ body {
 /* ================= HEADER MODERN ================= */
 header {
     background: linear-gradient(rgba(18,35,46,0.6), rgba(18,35,46,0.9)),
-    url('https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&w=800&q=80');
+    url('ombak.jpg');
     background-size:cover;
     background-position:center;
     color:white;
-    padding:15px;
+    gap:1px;
     text-align:center;
     position:sticky;
     top:0;
     z-index:1000;
     backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+.header-title {
+    margin: 0;
+}
+
+.typing-box {
+    margin: 0;
+}
+
+nav {
+    margin: 0;
+}
 .header-title {
     display:flex;
     justify-content:center;
     align-items:center;
     gap:10px;
+    font-size: 20px;
 }
 
 .logo {
@@ -52,10 +68,21 @@ header {
     background-size:cover;
     border:2px solid var(--accent-color);
 }
-
+.header-title h2 {
+    font-weight:900; /* super bold */
+    letter-spacing:3px; /* biar lebih tegas */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6); /* efek tegas */
+}
 .typing-box {
-    margin-top:10px;
+    margin-top:2px;
+    font-size:12px;
+    font-weight:900; /* lebih tebal */
+    letter-spacing:0.5px;
+    color:#e0f7ff; /* biar lebih kontras */
     font-family:monospace;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    transition: all 0.3s ease;
+
 }
 
 .cursor {
@@ -205,6 +232,36 @@ footer {
     z-index: 1000;
     border-top: 2px solid var(--accent-color);
 }
+/* MODAL PRATINJAU */
+#preview-modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    touch-action: none; /* Penting untuk gesture custom */
+}
+
+#preview-content {
+    max-width: 95%;
+    max-height: 80%;
+    transition: transform 0.1s ease-out;
+    transform-origin: center center;
+}
+
+.close-preview {
+    position: absolute;
+    top: 20px; right: 20px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 3001;
+}
+
 </style>
 </head>
 
@@ -212,7 +269,7 @@ footer {
 
 <header>
     <div class="header-title">
-        <div class="logo"></div>
+        <div class="logo" onclick="openPreview('logo-header.jpg', 'img')"></div>
         <h2>KEN AQUATIC</h2>
     </div>
 
@@ -233,17 +290,23 @@ footer {
 <div id="product-display"></div>
 
 <div class="floating-container">
-    <a href="https://wa.me/628123456789" class="float-btn float-wa" title="Hubungi Kami">
+    <a href="https://wa.me/6283878843262" class="float-btn float-wa" title="Hubungi Kami">
         <span>💬</span>
     </a>
-    <a href="https://maps.google.com/?q=Purwokerto" target="_blank" class="float-btn float-loc" title="Lokasi Kami">
+    <a href="https://maps.app.goo.gl/2swyzGusJoKJqBTEA" target="_blank" class="float-btn float-loc" title="Lokasi Kami">
         <span>📍</span>
     </a>
 </div>
 
 <footer>
-    &copy; 2026 Ken Aquatic - Purwokerto & Purbalingga
+    &copy; 2026 Ken Aquatic - Dusun 2, Selaganggeng, rt3 rw5, Kabupaten Purbalingga, Jawa Tengah 53352
 </footer>
+<div id="preview-modal">
+    <span class="close-preview" onclick="closePreview()">&times;</span>
+    <div id="preview-container">
+        </div>
+</div>
+
 
 <script>
 const sheetURL = 'https://opensheet.elk.sh/1F-Zjv-THQiZ6Hb6_NQULE7q1QYmlxcG47-6UV63AC2o/Sheet1';
@@ -251,7 +314,7 @@ let products = [];
 let currentCategory = "ikan";
 
 /* ================= TYPING ================= */
-const text = "Selamat datang di Ken Aquatic 🐟";
+const text = "Soal Channa, tidak perlu ditanya, disini tempatnya";
 let i = 0;
 
 function typeEffect(){
@@ -266,10 +329,16 @@ function typeEffect(){
 
 function hideTyping(){
     const box = document.getElementById("type-box");
-    box.style.transition="0.5s";
-    box.style.opacity="0";
-    box.style.transform="translateY(-10px)";
-    setTimeout(()=> box.style.display="none",500);
+
+    box.style.height = "0";
+    box.style.margin = "0";
+    box.style.padding = "0";
+    box.style.opacity = "0";
+    box.style.overflow = "hidden";
+
+    setTimeout(()=>{
+        box.style.display = "none";
+    }, 300);
 }
 
 typeEffect();
@@ -326,7 +395,7 @@ function fetchInventory(isSilent=false){
     });
 }
 
-/* ================= RENDER ================= */
+/* ================= RENDER (VERSI PERBAIKAN) ================= */
 function render(){
     const display = document.getElementById("product-display");
     let filtered = products.filter(p => p.category === currentCategory);
@@ -337,10 +406,35 @@ function render(){
     }
 
     display.innerHTML = filtered.map((p) => {
-        // Cek jika stok kosong
         const isOutOfStock = p.stock <= 0;
         const cardClass = isOutOfStock ? "curtain-item out-of-stock" : "curtain-item";
         const stockStatus = isOutOfStock ? "HABIS" : p.stock;
+
+        // --- LOGIKA DETEKSI MEDIA ---
+        let mediaHtml = "";
+        const url = p.url.toLowerCase();
+
+if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    const videoId = url.includes("v=") 
+        ? url.split('v=')[1]?.split('&')[0] 
+        : url.split('/').pop();
+
+    mediaHtml = `<iframe width="100%" height="200"
+        src="https://www.youtube.com/embed/${videoId}"
+        frameborder="0" allowfullscreen
+        style="border-radius:8px;"></iframe>`;
+}
+else if (url.match(/\.(mp4|webm|mov)$/)) {
+    mediaHtml = `<video controls onclick="openPreview('${p.url}', 'video')"
+        style="width:100%; max-width:250px; border-radius:8px;">
+        <source src="${p.url}">
+    </video>`;
+}
+else {
+    mediaHtml = `<img src="${p.url}"
+        onclick="openPreview('${p.url}', 'img')"
+        style="width:100%; max-width:250px; border-radius:8px;">`;
+}
 
         return `
         <div class="${cardClass}">
@@ -350,16 +444,15 @@ function render(){
             </div>
             <div class="curtain-content">
                 <div style="padding:15px; text-align:center">
-                    <img src="${p.url}" style="width:100%; max-width:250px; border-radius:8px; border: 1px solid #eee;">
-                    <div style="margin-top:10px; font-size:13px; color:#555;">
+                    ${mediaHtml} <div style="margin-top:10px; font-size:13px; color:#555;">
                         Stok: <b>${stockStatus}</b>
                     </div>
                     <div style="margin-top:5px; margin-bottom:15px; color:#333;">
                         ${p.desc}
                     </div>
                     ${!isOutOfStock ? `
-                        <a class="btn-buy-wa" href="https://wa.me/628123456789?text=Halo, saya ingin beli ${p.name}">
-                            Beli via WhatsApp
+                        <a class="btn-buy-wa" href="https://wa.me/6283878843262?text=Halo, saya ingin beli ${p.name}">
+                            Tanya ?
                         </a>
                     ` : '<p style="color:red; font-weight:bold;">Produk Sementara Tidak Tersedia</p>'}
                 </div>
@@ -368,6 +461,7 @@ function render(){
         `;
     }).join("");
 }
+
 
 /* ================= TOGGLE ================= */
 function toggleItem(el){
@@ -386,6 +480,82 @@ fetchInventory();
 
 // Update otomatis setiap 60 detik tanpa menampilkan skeleton (silent update)
 setInterval(() => fetchInventory(true), 60000);
+let modal = document.getElementById('preview-modal');
+let container = document.getElementById('preview-container');
+let scale = 1;
+let lastDist = 0;
+let lastScale = 1;
+
+function openPreview(src, type) {
+    modal.style.display = 'flex';
+    scale = 1; // Reset zoom
+    let content = "";
+    
+    if (type === 'img') {
+        content = `<img src="${src}" id="preview-content" style="transform: scale(1)">`;
+    } else {
+        content = `<video src="${src}" id="preview-content" controls autoplay style="transform: scale(1)"></video>`;
+    }
+    
+    container.innerHTML = content;
+    initZoom();
+}
+
+function closePreview() {
+    modal.style.display = 'none';
+    container.innerHTML = "";
+}
+
+function initZoom() {
+    const el = document.getElementById('preview-content');
+    
+    container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            // Hitung jarak awal antara dua jari
+            lastDist = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+        }
+    });
+
+    container.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+            e.preventDefault();
+            
+            // Hitung jarak baru
+            const dist = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+
+            // Hitung titik tengah (focal point)
+            const midX = (e.touches[0].pageX + e.touches[1].pageX) / 2;
+            const midY = (e.touches[0].pageY + e.touches[1].pageY) / 2;
+
+            // Atur transform origin agar mengikuti posisi jari
+            const rect = el.getBoundingClientRect();
+            const offsetX = ((midX - rect.left) / rect.width) * 100;
+            const offsetY = ((midY - rect.top) / rect.height) * 100;
+            
+            el.style.transformOrigin = `${offsetX}% ${offsetY}%`;
+
+            // Hitung skala baru
+            scale = lastScale * (dist / lastDist);
+            
+            // Batasi zoom (min 1x, max 4x)
+            if (scale < 1) scale = 1;
+            if (scale > 4) scale = 4;
+
+            el.style.transform = `scale(${scale})`;
+        }
+    }, { passive: false });
+
+    container.addEventListener('touchend', () => {
+        lastScale = scale;
+    });
+}
+
 </script>
 
 </body>
