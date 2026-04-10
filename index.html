@@ -398,7 +398,36 @@ function fetchInventory(isSilent=false){
 /* ================= RENDER (VERSI PERBAIKAN) ================= */
 function render(){
     const display = document.getElementById("product-display");
-    let filtered = products.filter(p => p.category === currentCategory);
+  let filtered = products
+    .filter(p => p.category === currentCategory)
+    .sort((a, b) => {
+
+        // ================= PRIORITAS KHUSUS =================
+        if (currentCategory === "ikan") {
+            const aChanna = a.name.toLowerCase().includes("channa");
+            const bChanna = b.name.toLowerCase().includes("channa");
+
+            if (aChanna !== bChanna) {
+                return aChanna ? 1 : -1; // Channa ke bawah
+            }
+        }
+
+        if (currentCategory === "media") {
+            const aAqua = a.name.toLowerCase().includes("aquascape");
+            const bAqua = b.name.toLowerCase().includes("aquascape");
+
+            if (aAqua !== bAqua) {
+                return aAqua ? 1 : -1; // Aquascape ke bawah
+            }
+        }
+
+        // ================= SORT NORMAL =================
+        if (a.price !== b.price) {
+            return a.price - b.price;
+        }
+
+        return a.name.localeCompare(b.name, 'id', { sensitivity: 'base' });
+    });
 
     if(filtered.length === 0){
         display.innerHTML = `<p style="text-align:center; padding:50px; color:#666;">Produk kosong di kategori ${currentCategory}.</p>`;
