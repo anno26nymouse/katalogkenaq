@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c7528b4cf7354650aec5b75cbd89323f"}'></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ken Aquatic Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --dark:      #0d1f2d;
+      --accent:    #00c2d1;
+      --gold:      #c9a84c;
+      --wa:        #25D366;
+      --loc:       #3498db;
+      --bg:        #f8f9fa;
+      --card-bg:   #ffffff;
+      --text:      #1a1a2e;
+      --muted:     #7a8899;
+      --border:    #e8edf2;
+      --channa-badge: linear-gradient(135deg, #c9a84c, #e8c97a);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 70px;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER ======= */
+    header {
+      background:
+        linear-gradient(to bottom, rgba(13,31,45,0.55) 0%, rgba(13,31,45,0.92) 100%),
+        url('ombak.jpg') center/cover no-repeat;
+      backdrop-filter: blur(4px);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 16px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: url('logo-header.jpg') center/cover;
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 14px rgba(0,194,209,0.5);
+      flex-shrink: 0;
+    }
+
+    .brand-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      line-height: 1;
+    }
+
+    .brand-text span {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .typing-box {
+      font-size: 11px;
+      font-family: monospace;
+      color: #c8e6ff;
+      letter-spacing: 0.5px;
+      min-height: 16px;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease;
+      max-height: 30px;
+    }
+
+    .typing-box.hidden {
+      max-height: 0; opacity: 0; margin: 0;
+    }
+
+    .cursor { animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* NAV */
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 0 12px;
+      width: 100%;
+    }
+
+    nav button {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.8);
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.5px;
+    }
+
+    nav button:hover {
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    nav button.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--dark);
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(0,194,209,0.45);
+    }
+
+    /* ======= SECTION LABEL ======= */
+    .section-label {
+      padding: 22px 16px 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    .section-label .line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ======= BEST SELLER BANNER ======= */
+    .bestseller-banner {
+      margin: 0 14px 4px;
+      background: linear-gradient(135deg, #0d1f2d 0%, #1a3a4d 100%);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      overflow: hidden;
+      position: relative;
+      animation: fadeSlideUp 0.5s ease both;
+    }
+
+    .bestseller-banner::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.2) 0%, transparent 70%);
+    }
+
+    .bs-icon {
+      font-size: 34px;
+      filter: drop-shadow(0 0 8px rgba(201,168,76,0.6));
+      flex-shrink: 0;
+    }
+
+    .bs-text h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .bs-text p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .bs-badge {
+      margin-left: auto;
+      background: var(--channa-badge);
+      color: #0d1f2d;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 30px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    /* ======= SKELETON ======= */
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 10px 14px;
+    }
+
+    .skeleton-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      padding: 12px;
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, #eee 0%, #f5f5f5 50%, #eee 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite ease-in-out;
+      border-radius: 6px;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: -200% 0 }
+      100% { background-position:  200% 0 }
+    }
+
+    /* ======= PRODUCT GRID ======= */
+    #product-display {
+      padding: 0 14px 20px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    /* ======= PRODUCT CARD ======= */
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+      animation: fadeSlideUp 0.4s ease both;
+      position: relative;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .card.out-of-stock {
+      filter: grayscale(0.6);
+      opacity: 0.75;
+    }
+
+    .card.channa-card {
+      border-color: rgba(201,168,76,0.4);
+      box-shadow: 0 2px 10px rgba(201,168,76,0.12);
+    }
+
+    .channa-ribbon {
+      position: absolute;
+      top: 10px; left: -1px;
+      background: var(--channa-badge);
+      color: #0d1f2d;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 3px 9px 3px 10px;
+      border-radius: 0 20px 20px 0;
+      text-transform: uppercase;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(201,168,76,0.35);
+    }
+
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+      background: var(--border);
+      transition: transform 0.35s ease;
+    }
+
+    .card:hover .card-thumb { transform: scale(1.04); }
+
+    .card-thumb-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stock-badge {
+      position: absolute;
+      bottom: 8px; right: 8px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .stock-ok  { background: rgba(39,174,96,0.92); color: #fff; }
+    .stock-low { background: rgba(230,126,34,0.92); color: #fff; }
+    .stock-out { background: rgba(180,0,0,0.85);   color: #fff; }
+
+    .card-info {
+      padding: 10px 12px 12px;
+    }
+
+    .card-name {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.3px;
+    }
+
+    /* ======= DETAIL DRAWER (expanded) ======= */
+    .card-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+      background: #f4f8fb;
+      border-top: 1px solid var(--border);
+    }
+
+    .card.open .card-detail {
+      max-height: 600px;
+    }
+
+    .card-detail-inner {
+      padding: 14px;
+      text-align: center;
+    }
+
+    .detail-media {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .detail-media img,
+    .detail-media video {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .detail-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--wa);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 14px rgba(37,211,102,0.3);
+    }
+
+    .btn-wa:active { opacity: 0.85; transform: scale(0.97); }
+
+    .out-msg {
+      color: #c0392b;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 0;
+    }
+
+    /* ======= EMPTY ======= */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+
+    /* ======= FLOAT BUTTONS ======= */
+    .floating-container {
+      position: fixed;
+      bottom: 82px; right: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 2000;
+    }
+
+    .float-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-decoration: none;
+      font-size: 22px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .float-btn:active { transform: scale(0.9); }
+
+    .float-wa  { background: var(--wa);  box-shadow: 0 4px 14px rgba(37,211,102,0.4); }
+    .float-loc { background: var(--loc); box-shadow: 0 4px 14px rgba(52,152,219,0.4); }
+
+    /* ======= FOOTER ======= */
+    footer {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      background: var(--dark);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 11px 12px;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+      z-index: 1000;
+      border-top: 2px solid var(--accent);
+    }
+
+    /* ======= PREVIEW MODAL ======= */
+    #preview-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      background: rgba(0,0,0,0.93);
+      justify-content: center;
+      align-items: center;
+      touch-action: none;
+      animation: fadeIn 0.2s ease;
+    }
+
+    #preview-modal.active { display: flex; }
+
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    #preview-container {
+      max-width: 95%;
+      max-height: 85%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #preview-content {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 10px;
+      display: block;
+      transition: transform 0.1s ease-out;
+      transform-origin: center center;
+    }
+
+    .close-preview {
+      position: absolute;
+      top: 16px; right: 18px;
+      color: rgba(255,255,255,0.8);
+      font-size: 32px;
+      cursor: pointer;
+      z-index: 4001;
+      line-height: 1;
+    }
+
+    /* ======= ANIMATIONS ======= */
+    @keyframes fadeSlideUp {
+      from { opacity:0; transform: translateY(18px); }
+      to   { opacity:1; transform: translateY(0);    }
+    }
+
+    .card:nth-child(1)  { animation-delay: 0.04s }
+    .card:nth-child(2)  { animation-delay: 0.08s }
+    .card:nth-child(3)  { animation-delay: 0.12s }
+    .card:nth-child(4)  { animation-delay: 0.16s }
+    .card:nth-child(5)  { animation-delay: 0.20s }
+    .card:nth-child(6)  { animation-delay: 0.24s }
+    .card:nth-child(7)  { animation-delay: 0.28s }
+    .card:nth-child(8)  { animation-delay: 0.32s }
+    .card:nth-child(9)  { animation-delay: 0.36s }
+    .card:nth-child(10) { animation-delay: 0.40s }
+
+    /* ======= RIPPLE on tap ======= */
+    .card { overflow: hidden; }
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0,194,209,0.18);
+      transform: scale(0);
+      animation: ripple-anim 0.5s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple-anim {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* iframe media */
+    .detail-media iframe {
+      width: 100%;
+      height: 180px;
+      border: none;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* category description pill */
+    .cat-pill {
+      display: inline-block;
+      background: rgba(0,194,209,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(0,194,209,0.25);
+      border-radius: 30px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      padding: 3px 10px;
+      text-transform: uppercase;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* ======= IFRAME for youtube ======= */
+    .thumb-placeholder {
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: linear-gradient(135deg, #1a2f3f, #0d1f2d);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      gap: 6px;
+    }
+    .thumb-placeholder .play-icon { font-size: 32px; }
+    .thumb-placeholder span { font-size: 11px; }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-brand">
+    <div class="logo" onclick="openPreview('logo-header.jpg','img')"></div>
+    <div class="brand-text">
+      <h2>KEN AQUATIC</h2>
+      <span>Premium Aquatic Store</span>
+    </div>
+  </div>
+
+  <div class="typing-box" id="type-box">
+    <span id="typed-text"></span><span class="cursor">_</span>
+  </div>
+
+  <nav id="cat-nav">
+    <button class="active" data-cat="ikan"      onclick="setCategory('ikan',this)">Ikan</button>
+    <button               data-cat="pakan"      onclick="setCategory('pakan',this)">Pakan</button>
+    <button               data-cat="peralatan"  onclick="setCategory('peralatan',this)">Peralatan</button>
+    <button               data-cat="media"      onclick="setCategory('media',this)">Media</button>
+    <button               data-cat="aquarium"   onclick="setCategory('aquarium',this)">Aquarium</button>
+    <button               data-cat="pancing"    onclick="setCategory('pancing',this)">Pancing</button>
+  </nav>
+</header>
+
+<div id="extra-section"></div>
+<div id="product-display"></div>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating-container">
+  <a href="https://wa.me/6283878843262" class="float-btn float-wa" title="Hubungi Kami">💬</a>
+  <a href="https://maps.app.goo.gl/2swyzGusJoKJqBTEA" target="_blank" class="float-btn float-loc" title="Lokasi Kami">📍</a>
+</div>
+
+<footer>&copy; 2026 Ken Aquatic · Dusun 2, Selaganggeng RT3/RW5, Kab. Purbalingga, Jawa Tengah 53352</footer>
+
+<!-- PREVIEW MODAL -->
+<div id="preview-modal">
+  <span class="close-preview" onclick="closePreview()">&times;</span>
+  <div id="preview-container"></div>
+</div>
+
+
+<script>
+/* =================== CONFIG =================== */
+const SHEET_URL   = 'https://opensheet.elk.sh/1F-Zjv-THQiZ6Hb6_NQULE7q1QYmlxcG47-6UV63AC2o/Sheet1';
+const CACHE_KEY   = 'ken_aquatic_products';
+const CACHE_TTL   = 60_000; // 60 s
+
+let products        = [];
+let currentCategory = 'ikan';
+let renderTimer     = null;
+
+/* =================== TYPING =================== */
+const TAGLINE = "Soal Channa, tidak perlu ditanya, disini tempatnya";
+let tIdx = 0;
+
+function typeEffect() {
+  if (tIdx < TAGLINE.length) {
+    document.getElementById('typed-text').textContent += TAGLINE[tIdx++];
+    setTimeout(typeEffect, 50);
+  } else {
+    setTimeout(() => {
+      document.getElementById('type-box').classList.add('hidden');
+    }, 4000);
+  }
+}
+typeEffect();
+
+/* =================== CATEGORY =================== */
+function setCategory(cat, el) {
+  currentCategory = cat.toLowerCase();
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  scheduleRender();
+}
+
+/* =================== SKELETON =================== */
+function showSkeleton() {
+  document.getElementById('extra-section').innerHTML = '';
+  document.getElementById('product-display').innerHTML = `
+    <div class="skeleton-grid">
+      ${Array(6).fill(`
+        <div class="skeleton-card">
+          <div class="skeleton" style="aspect-ratio:1/1;border-radius:10px"></div>
+          <div class="skeleton" style="height:13px;width:65%;margin-top:10px"></div>
+          <div class="skeleton" style="height:13px;width:40%;margin-top:6px"></div>
+        </div>`).join('')}
+    </div>`;
+}
+
+/* =================== FETCH with Cache =================== */
+function fetchInventory(silent = false) {
+  if (!silent) {
+    // Try cache first
+    try {
+      const cached = sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { ts, data } = JSON.parse(cached);
+        if (Date.now() - ts < CACHE_TTL) {
+          products = data;
+          scheduleRender();
+          return; // served from cache — still refresh in BG silently
+        }
+      }
+    } catch(_) {}
+    showSkeleton();
+  }
+
+  fetch(SHEET_URL)
+    .then(r => r.json())
+    .then(raw => {
+      products = raw.map(item => ({
+        name:     (item.name  || 'Produk Tanpa Nama').trim(),
+        category: (item.category || '').toLowerCase().trim(),
+        price:    Number((item.price  || '0').toString().replace(/\D/g,'')) || 0,
+        stock:    Number((item.stock  || '0').toString().replace(/\D/g,'')) || 0,
+        desc:     (item.desc  || '').trim(),
+        url:      (item.url   || '').trim()
+      }));
+
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: products }));
+      } catch(_) {}
+
+      scheduleRender();
+    })
+    .catch(err => {
+      console.error('Fetch error:', err);
+      if (!silent && products.length === 0) {
+        document.getElementById('product-display').innerHTML =
+          `<div class="empty-state"><div class="icon">🌊</div><p>Gagal memuat produk.<br>Coba lagi sebentar.</p></div>`;
+      }
+    });
+}
+
+/* =================== RENDER (debounced) =================== */
+function scheduleRender() {
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(render, 30);
+}
+
+function getVideoId(url) {
+  if (url.includes('v=')) return url.split('v=')[1]?.split('&')[0];
+  return url.split('/').pop().split('?')[0];
+}
+
+function isYoutube(url) {
+  return url.includes('youtube.com') || url.includes('youtu.be');
+}
+
+function isVideo(url) {
+  return /\.(mp4|webm|mov)(\?|$)/i.test(url);
+}
+
+function buildThumb(p) {
+  if (isYoutube(p.url)) {
+    const vid = getVideoId(p.url);
+    return `<div class="thumb-placeholder">
+               <span class="play-icon">▶</span>
+               <span>Video</span>
+             </div>`;
+  }
+  if (isVideo(p.url)) {
+    return `<div class="thumb-placeholder">
+               <span class="play-icon">▶</span>
+               <span>Video</span>
+             </div>`;
+  }
+  return `<img class="card-thumb" src="${p.url}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">`;
+}
+
+function buildDetailMedia(p) {
+  if (isYoutube(p.url)) {
+    const vid = getVideoId(p.url);
+    return `<div class="detail-media">
+              <iframe src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe>
+            </div>`;
+  }
+  if (isVideo(p.url)) {
+    return `<div class="detail-media">
+              <video controls onclick="openPreview('${p.url}','video')" style="width:100%;border-radius:10px;">
+                <source src="${p.url}">
+              </video>
+            </div>`;
+  }
+  return `<div class="detail-media" onclick="openPreview('${p.url}','img')">
+            <img src="${p.url}" alt="${p.name}" loading="lazy" style="width:100%;cursor:zoom-in;">
+          </div>`;
+}
+
+function stockLabel(stock) {
+  if (stock <= 0)  return { cls: 'stock-out', txt: 'Habis' };
+  if (stock <= 3)  return { cls: 'stock-low', txt: `Stok ${stock}` };
+  return { cls: 'stock-ok', txt: `Stok ${stock}` };
+}
+
+function render() {
+  const extra   = document.getElementById('extra-section');
+  const display = document.getElementById('product-display');
+  const cat     = currentCategory;
+
+  // ---- Sort logic ----
+  const filtered = products
+    .filter(p => p.category === cat)
+    .sort((a, b) => {
+      // Category-specific pinning to bottom
+      const pinBottom = (p) => {
+        if (cat === 'ikan'  && p.name.toLowerCase().includes('channa')) return 1;
+        if (cat === 'media' && p.name.toLowerCase().includes('aquascape')) return 1;
+        return 0;
+      };
+      const ap = pinBottom(a), bp = pinBottom(b);
+      if (ap !== bp) return ap - bp;
+      if (a.price !== b.price) return a.price - b.price;
+      return a.name.localeCompare(b.name, 'id', { sensitivity: 'base' });
+    });
+
+  // ---- Channa best seller banner ----
+  extra.innerHTML = cat === 'ikan' ? `
+    <div class="bestseller-banner">
+      <div class="bs-icon">🐟</div>
+      <div class="bs-text">
+        <h4>Channa Collection</h4>
+        <p>Ikan monster unggulan kami.<br>Kualitas pilihan, langsung dari breeder.</p>
+      </div>
+      <div class="bs-badge">Best Seller</div>
+    </div>` : '';
+
+  if (filtered.length === 0) {
+    display.innerHTML = `<div class="empty-state">
+      <div class="icon">🌊</div>
+      <p>Belum ada produk di kategori <b>${cat}</b>.</p>
+    </div>`;
+    return;
+  }
+
+  // ---- Build section label ----
+  const catLabels = {
+    ikan:'Koleksi Ikan', pakan:'Pakan', peralatan:'Peralatan',
+    media:'Media Tanam', aquarium:'Aquarium', pancing:'Pancing'
+  };
+
+  let html = `
+    <div class="section-label">
+      <h3>${catLabels[cat] || cat}</h3>
+      <span class="cat-pill">${filtered.length} Produk</span>
+      <div class="line"></div>
+    </div>
+    <div class="product-grid" id="pgrid">`;
+
+  filtered.forEach((p, idx) => {
+    const isChanna   = cat === 'ikan' && p.name.toLowerCase().includes('channa');
+    const isOut      = p.stock <= 0;
+    const sl         = stockLabel(p.stock);
+    const cardCls    = ['card', isOut ? 'out-of-stock' : '', isChanna ? 'channa-card' : ''].filter(Boolean).join(' ');
+
+    html += `
+      <div class="${cardCls}" data-idx="${idx}" onclick="toggleCard(this)">
+        ${isChanna ? `<div class="channa-ribbon">★ Best Seller</div>` : ''}
+        <div class="card-thumb-wrap">
+          ${buildThumb(p)}
+          <span class="stock-badge ${sl.cls}">${sl.txt}</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">${p.name}${isOut ? ' <span style="color:#c0392b;font-size:11px">(Habis)</span>' : ''}</div>
+          <div class="card-price">Rp ${p.price.toLocaleString('id-ID')}</div>
+        </div>
+        <div class="card-detail">
+          <div class="card-detail-inner">
+            ${buildDetailMedia(p)}
+            ${p.desc ? `<div class="detail-desc">${p.desc}</div>` : ''}
+            ${!isOut
+              ? `<a class="btn-wa" href="https://wa.me/6283878843262?text=Halo%2C+saya+ingin+tanya+tentang+${encodeURIComponent(p.name)}" onclick="event.stopPropagation()">
+                   💬 Tanya di WhatsApp
+                 </a>`
+              : `<p class="out-msg">⚠️ Produk sementara tidak tersedia</p>`
+            }
+          </div>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  display.innerHTML = html;
+}
+
+/* =================== TOGGLE CARD =================== */
+function toggleCard(card) {
+  const wasOpen = card.classList.contains('open');
+
+  // Ripple effect
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.cssText = `width:80px;height:80px;left:calc(50% - 40px);top:calc(50% - 40px);`;
+  card.appendChild(r);
+  setTimeout(() => r.remove(), 500);
+
+  // Close all
+  document.querySelectorAll('.card.open').forEach(c => c.classList.remove('open'));
+
+  if (!wasOpen) {
+    card.classList.add('open');
+    // Scroll card into view gently
+    setTimeout(() => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 120);
+  }
+}
+
+/* =================== PREVIEW MODAL =================== */
+const modal     = document.getElementById('preview-modal');
+const previewCt = document.getElementById('preview-container');
+let pScale = 1, pLastDist = 0, pLastScale = 1;
+
+function openPreview(src, type) {
+  pScale = pLastScale = 1;
+  modal.classList.add('active');
+  previewCt.innerHTML = type === 'img'
+    ? `<img src="${src}" id="preview-content">`
+    : `<video src="${src}" id="preview-content" controls autoplay></video>`;
+  initZoom();
+}
+
+function closePreview() {
+  modal.classList.remove('active');
+  previewCt.innerHTML = '';
+}
+
+modal.addEventListener('click', e => { if (e.target === modal) closePreview(); });
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePreview(); });
+
+function initZoom() {
+  const el = document.getElementById('preview-content');
+
+  previewCt.addEventListener('touchstart', e => {
+    if (e.touches.length === 2)
+      pLastDist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX,
+                             e.touches[0].pageY - e.touches[1].pageY);
+  }, { once: false });
+
+  previewCt.addEventListener('touchmove', e => {
+    if (e.touches.length !== 2) return;
+    e.preventDefault();
+    const dist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX,
+                            e.touches[0].pageY - e.touches[1].pageY);
+    const midX = (e.touches[0].pageX + e.touches[1].pageX) / 2;
+    const midY = (e.touches[0].pageY + e.touches[1].pageY) / 2;
+    const rect  = el.getBoundingClientRect();
+    el.style.transformOrigin = `${((midX - rect.left) / rect.width)*100}% ${((midY - rect.top) / rect.height)*100}%`;
+    pScale = Math.min(4, Math.max(1, pLastScale * (dist / pLastDist)));
+    el.style.transform = `scale(${pScale})`;
+  }, { passive: false });
+
+  previewCt.addEventListener('touchend', () => { pLastScale = pScale; });
+}
+
+/* =================== INIT =================== */
+fetchInventory();
+setInterval(() => fetchInventory(true), 60_000);
+</script>
+
+</body>
+</html>
