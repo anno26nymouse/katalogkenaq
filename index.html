@@ -20,10 +20,10 @@ body {
     margin:0;
     font-family:sans-serif;
     background:#d8d8d8;
-    padding-bottom: 60px; /* Ruang untuk footer */
+    padding-bottom: 60px;
 }
 
-/* ================= HEADER MODERN ================= */
+/* ================= HEADER ================= */
 header {
     background: linear-gradient(rgba(18,35,46,0.6), rgba(18,35,46,0.9)),
     url('ombak.jpg');
@@ -41,17 +41,10 @@ header {
     align-items: center;
 }
 
-.header-title {
-    margin: 0;
-}
+.header-title { margin: 0; }
+.typing-box { margin: 0; }
+nav { margin: 0; }
 
-.typing-box {
-    margin: 0;
-}
-
-nav {
-    margin: 0;
-}
 .header-title {
     display:flex;
     justify-content:center;
@@ -69,34 +62,28 @@ nav {
     border:2px solid var(--accent-color);
 }
 .header-title h2 {
-    font-weight:900; /* super bold */
-    letter-spacing:3px; /* biar lebih tegas */
-    text-shadow: 0 2px 4px rgba(0,0,0,0.6); /* efek tegas */
+    font-weight:900;
+    letter-spacing:3px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 .typing-box {
     margin-top:2px;
     font-size:12px;
-    font-weight:900; /* lebih tebal */
+    font-weight:900;
     letter-spacing:0.5px;
-    color:#e0f7ff; /* biar lebih kontras */
+    color:#e0f7ff;
     font-family:monospace;
     text-shadow: 0 1px 3px rgba(0,0,0,0.7);
     transition: all 0.3s ease;
-
 }
 
-.cursor {
-    animation: blink 1s infinite;
-}
+.cursor { animation: blink 1s infinite; }
 @keyframes blink {
     0%,100%{opacity:1}
     50%{opacity:0}
 }
 
-/* NAV */
-nav {
-    margin-top:10px;
-}
+nav { margin-top:10px; }
 
 nav button {
     background:transparent;
@@ -140,9 +127,7 @@ nav button.active {
 }
 
 /* ================= PRODUCT ================= */
-#product-display {
-    padding-bottom: 20px;
-}
+#product-display { padding-bottom: 20px; }
 
 .curtain-item {
     background:white;
@@ -152,7 +137,6 @@ nav button.active {
     transition: background 0.3s;
 }
 
-/* Tambahan: Tampilan jika stok 0 (Abu-abu) */
 .curtain-item.out-of-stock {
     background: #cccccc;
     filter: grayscale(0.8);
@@ -210,14 +194,39 @@ nav button.active {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     font-size: 24px;
     transition: transform 0.2s;
+    cursor: pointer;
+    border: none;
 }
 
-.float-btn:active {
-    transform: scale(0.9);
-}
+.float-btn:active { transform: scale(0.9); }
 
 .float-wa { background-color: var(--wa-green); }
 .float-loc { background-color: var(--location-blue); }
+.float-log { background-color: var(--primary-dark); border: 2px solid var(--accent-color); position: relative; }
+
+/* Badge notifikasi */
+.notif-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #e74c3c;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-badge 1.5s infinite;
+    display: none;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
 
 /* ================= FOOTER ================= */
 footer {
@@ -232,7 +241,8 @@ footer {
     z-index: 1000;
     border-top: 2px solid var(--accent-color);
 }
-/* MODAL PRATINJAU */
+
+/* ================= MODAL PRATINJAU ================= */
 #preview-modal {
     display: none;
     position: fixed;
@@ -243,7 +253,7 @@ footer {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    touch-action: none; /* Penting untuk gesture custom */
+    touch-action: none;
 }
 
 #preview-content {
@@ -262,6 +272,196 @@ footer {
     z-index: 3001;
 }
 
+/* ================= UPDATE LOG MODAL ================= */
+#update-log-modal {
+    display: none;
+    position: fixed;
+    z-index: 4000;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.75);
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#update-log-modal.open {
+    display: flex;
+    animation: fadeInBg 0.25s ease;
+}
+
+@keyframes fadeInBg {
+    from { background: rgba(0,0,0,0); }
+    to   { background: rgba(0,0,0,0.75); }
+}
+
+.log-sheet {
+    background: #fff;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 20px 20px 0 0;
+    padding: 0 0 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s cubic-bezier(0.34,1.28,0.64,1);
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.25);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+}
+
+.log-header {
+    position: sticky;
+    top: 0;
+    background: var(--primary-dark);
+    color: white;
+    border-radius: 20px 20px 0 0;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.log-header h3 {
+    margin: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.log-header .log-timestamp {
+    font-size: 11px;
+    color: var(--accent-color);
+    font-family: monospace;
+}
+
+.close-log {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+}
+
+.log-body {
+    padding: 16px 16px 0;
+}
+
+/* Seksi perubahan */
+.log-section {
+    margin-bottom: 16px;
+}
+
+.log-section-title {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.section-new    { background: #e8f8f0; color: #1a7a45; }
+.section-price  { background: #fff3e0; color: #b35c00; }
+.section-stock  { background: #e8f0ff; color: #1a3fa0; }
+.section-nochange { background: #f0f0f0; color: #888; }
+
+.log-item {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    border-left: 3px solid transparent;
+}
+
+.log-item.new-item    { border-left-color: #27ae60; }
+.log-item.price-item  { border-left-color: #e67e22; }
+.log-item.stock-item  { border-left-color: #3498db; }
+
+.log-item .item-name {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+.log-item .item-detail {
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tag-old {
+    background: #ffecec;
+    color: #c0392b;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: line-through;
+}
+
+.tag-new {
+    background: #eafaf1;
+    color: #1e8449;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.tag-arrow { color: #999; font-size: 12px; }
+
+.tag-category {
+    background: rgba(0,212,255,0.12);
+    color: #007a9c;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.tag-price {
+    background: #fff8ee;
+    color: #b35c00;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.stock-up   { color: #27ae60; font-weight: 700; }
+.stock-down { color: #e74c3c; font-weight: 700; }
+
+.log-empty {
+    text-align: center;
+    color: #aaa;
+    padding: 30px 16px;
+    font-size: 14px;
+}
+
+.log-empty .log-empty-icon { font-size: 40px; margin-bottom: 8px; }
+
+.log-footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #bbb;
+    padding: 12px 16px 0;
+    border-top: 1px solid #eee;
+    margin: 8px 16px 0;
+}
 </style>
 </head>
 
@@ -282,15 +482,20 @@ footer {
         <button onclick="setCategory('pakan',this)">Pakan</button>
         <button onclick="setCategory('peralatan',this)">Peralatan</button>
         <button onclick="setCategory('media',this)">Media</button>
- <button onclick="setCategory('aquarium',this)">Aquarium</button>
- <button onclick="setCategory('pancing',this)">Pancing</button>
-  </nav>
+        <button onclick="setCategory('aquarium',this)">Aquarium</button>
+        <button onclick="setCategory('pancing',this)">Pancing</button>
+    </nav>
 </header>
 
 <div id="product-display"></div>
 
 <div class="floating-container">
-    <a href="https://wa.me/6283878843262" class="float-btn float-wa" title="Hubungi Kami">
+    <!-- Tombol Log Update -->
+    <button class="float-btn float-log" onclick="openUpdateLog()" title="Log Update Data">
+        <span>🔔</span>
+        <span class="notif-badge" id="notif-badge">0</span>
+    </button>
+    <a href="https://wa.me/6281391676392" class="float-btn float-wa" title="Hubungi Kami">
         <span>💬</span>
     </a>
     <a href="https://maps.app.goo.gl/2swyzGusJoKJqBTEA" target="_blank" class="float-btn float-loc" title="Lokasi Kami">
@@ -301,17 +506,37 @@ footer {
 <footer>
     &copy; 2026 Ken Aquatic - Dusun 2, Selaganggeng, rt3 rw5, Kabupaten Purbalingga, Jawa Tengah 53352
 </footer>
+
+<!-- Modal Pratinjau Gambar -->
 <div id="preview-modal">
     <span class="close-preview" onclick="closePreview()">&times;</span>
-    <div id="preview-container">
+    <div id="preview-container"></div>
+</div>
+
+<!-- Modal Update Log -->
+<div id="update-log-modal" onclick="handleLogModalBgClick(event)">
+    <div class="log-sheet" id="log-sheet">
+        <div class="log-header">
+            <h3>🔔 Update Data Katalog</h3>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <span class="log-timestamp" id="log-timestamp">—</span>
+                <button class="close-log" onclick="closeUpdateLog()">✕</button>
+            </div>
         </div>
+        <div class="log-body" id="log-body">
+            <!-- Diisi oleh JS -->
+        </div>
+    </div>
 </div>
 
 
 <script>
 const sheetURL = 'https://opensheet.elk.sh/1F-Zjv-THQiZ6Hb6_NQULE7q1QYmlxcG47-6UV63AC2o/Sheet1';
+const CACHE_KEY = 'kenaquatic_cache_v1';
+
 let products = [];
 let currentCategory = "ikan";
+let lastChanges = null; // menyimpan hasil deteksi perubahan terbaru
 
 /* ================= TYPING ================= */
 const text = "Soal Channa, tidak perlu ditanya, disini tempatnya";
@@ -329,16 +554,12 @@ function typeEffect(){
 
 function hideTyping(){
     const box = document.getElementById("type-box");
-
     box.style.height = "0";
     box.style.margin = "0";
     box.style.padding = "0";
     box.style.opacity = "0";
     box.style.overflow = "hidden";
-
-    setTimeout(()=>{
-        box.style.display = "none";
-    }, 300);
+    setTimeout(()=>{ box.style.display = "none"; }, 300);
 }
 
 typeEffect();
@@ -346,11 +567,8 @@ typeEffect();
 /* ================= NAV LOGIC ================= */
 function setCategory(category, element) {
     currentCategory = category.toLowerCase();
-    
-    // Ubah status tombol aktif
     document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
-    
     render();
 }
 
@@ -368,6 +586,105 @@ function showSkeleton(){
     document.getElementById("product-display").innerHTML = html;
 }
 
+/* ================= CACHE HELPERS ================= */
+function saveCache(data) {
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            data: data
+        }));
+    } catch(e) { /* quota exceeded — abaikan */ }
+}
+
+function loadCache() {
+    try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+    } catch(e) { return null; }
+}
+
+/* ================= DETEKSI PERUBAHAN ================= */
+function detectChanges(oldProducts, newProducts) {
+    const changes = {
+        newItems:     [],
+        priceChanges: [],
+        stockChanges: [],
+        timestamp:    new Date().toLocaleString('id-ID', {
+            day:'2-digit', month:'short', year:'numeric',
+            hour:'2-digit', minute:'2-digit'
+        })
+    };
+
+    if (!oldProducts || oldProducts.length === 0) return changes;
+
+    // Buat map berdasarkan nama produk (lowercase) sebagai key
+    const oldMap = {};
+    oldProducts.forEach(p => {
+        oldMap[p.name.trim().toLowerCase()] = p;
+    });
+
+    const newMap = {};
+    newProducts.forEach(p => {
+        newMap[p.name.trim().toLowerCase()] = p;
+    });
+
+    // Cek produk baru & perubahan harga/stok
+    newProducts.forEach(p => {
+        const key = p.name.trim().toLowerCase();
+        const old  = oldMap[key];
+
+        if (!old) {
+            // Produk baru sama sekali
+            changes.newItems.push({
+                name:     p.name,
+                category: p.category,
+                price:    p.price,
+                stock:    p.stock
+            });
+            return;
+        }
+
+        // Cek perubahan harga
+        if (old.price !== p.price) {
+            changes.priceChanges.push({
+                name:     p.name,
+                category: p.category,
+                oldPrice: old.price,
+                newPrice: p.price
+            });
+        }
+
+        // Cek perubahan stok
+        if (old.stock !== p.stock) {
+            changes.stockChanges.push({
+                name:     p.name,
+                category: p.category,
+                oldStock: old.stock,
+                newStock: p.stock
+            });
+        }
+    });
+
+    return changes;
+}
+
+function totalChanges(c) {
+    if (!c) return 0;
+    return c.newItems.length + c.priceChanges.length + c.stockChanges.length;
+}
+
+/* ================= BADGE NOTIFIKASI ================= */
+function updateBadge(count) {
+    const badge = document.getElementById('notif-badge');
+    if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
 /* ================= FETCH ================= */
 function fetchInventory(isSilent=false){
     if(!isSilent) showSkeleton();
@@ -375,19 +692,36 @@ function fetchInventory(isSilent=false){
     fetch(sheetURL)
     .then(res => res.json())
     .then(data => {
-      products = data.map(item => {
-    const rawPrice = item.price ? item.price.toString() : "0";
+        const newProducts = data.map(item => {
+            const rawPrice = item.price ? item.price.toString() : "0";
+            return {
+                name:     item.name || "Produk Tanpa Nama",
+                category: (item.category || "").toLowerCase().trim(),
+                price:    Number(rawPrice.replace(/\D/g,'')) || 0,
+                stock:    Number((item.stock || "").toString().replace(/\D/g,'')) || 0,
+                desc:     item.desc || "",
+                url:      item.url || "https://via.placeholder.com/150"
+            };
+        });
 
-    return {
-        name: item.name || "Produk Tanpa Nama",
-        category: (item.category || "").toLowerCase().trim(),
-        price: Number(rawPrice.replace(/\D/g,'')) || 0,
-        stock: Number((item.stock || "").toString().replace(/\D/g,'')) || 0,
-        desc: item.desc || "",
-        url: item.url || "https://via.placeholder.com/150"
-    };
-});
+        // Ambil cache lama
+        const cached = loadCache();
+        const oldProducts = cached ? cached.data : null;
 
+        // Deteksi perubahan
+        const changes = detectChanges(oldProducts, newProducts);
+        lastChanges = changes;
+
+        const count = totalChanges(changes);
+
+        if (count > 0) {
+            updateBadge(count);
+        }
+
+        // Simpan cache baru
+        saveCache(newProducts);
+
+        products = newProducts;
         render();
     })
     .catch(err => {
@@ -395,39 +729,25 @@ function fetchInventory(isSilent=false){
     });
 }
 
-/* ================= RENDER (VERSI PERBAIKAN) ================= */
+/* ================= RENDER ================= */
 function render(){
     const display = document.getElementById("product-display");
-  let filtered = products
-    .filter(p => p.category === currentCategory)
-    .sort((a, b) => {
-
-        // ================= PRIORITAS KHUSUS =================
-        if (currentCategory === "ikan") {
-            const aChanna = a.name.toLowerCase().includes("channa");
-            const bChanna = b.name.toLowerCase().includes("channa");
-
-            if (aChanna !== bChanna) {
-                return aChanna ? 1 : -1; // Channa ke bawah
+    let filtered = products
+        .filter(p => p.category === currentCategory)
+        .sort((a, b) => {
+            if (currentCategory === "ikan") {
+                const aChanna = a.name.toLowerCase().includes("channa");
+                const bChanna = b.name.toLowerCase().includes("channa");
+                if (aChanna !== bChanna) return aChanna ? 1 : -1;
             }
-        }
-
-        if (currentCategory === "media") {
-            const aAqua = a.name.toLowerCase().includes("aquascape");
-            const bAqua = b.name.toLowerCase().includes("aquascape");
-
-            if (aAqua !== bAqua) {
-                return aAqua ? 1 : -1; // Aquascape ke bawah
+            if (currentCategory === "media") {
+                const aAqua = a.name.toLowerCase().includes("aquascape");
+                const bAqua = b.name.toLowerCase().includes("aquascape");
+                if (aAqua !== bAqua) return aAqua ? 1 : -1;
             }
-        }
-
-        // ================= SORT NORMAL =================
-        if (a.price !== b.price) {
-            return a.price - b.price;
-        }
-
-        return a.name.localeCompare(b.name, 'id', { sensitivity: 'base' });
-    });
+            if (a.price !== b.price) return a.price - b.price;
+            return a.name.localeCompare(b.name, 'id', { sensitivity: 'base' });
+        });
 
     if(filtered.length === 0){
         display.innerHTML = `<p style="text-align:center; padding:50px; color:#666;">Produk kosong di kategori ${currentCategory}.</p>`;
@@ -436,34 +756,30 @@ function render(){
 
     display.innerHTML = filtered.map((p) => {
         const isOutOfStock = p.stock <= 0;
-        const cardClass = isOutOfStock ? "curtain-item out-of-stock" : "curtain-item";
-        const stockStatus = isOutOfStock ? "HABIS" : p.stock;
+        const cardClass    = isOutOfStock ? "curtain-item out-of-stock" : "curtain-item";
+        const stockStatus  = isOutOfStock ? "HABIS" : p.stock;
 
-        // --- LOGIKA DETEKSI MEDIA ---
         let mediaHtml = "";
         const url = p.url.toLowerCase();
 
-if (url.includes("youtube.com") || url.includes("youtu.be")) {
-    const videoId = url.includes("v=") 
-        ? url.split('v=')[1]?.split('&')[0] 
-        : url.split('/').pop();
-
-    mediaHtml = `<iframe width="100%" height="200"
-        src="https://www.youtube.com/embed/${videoId}"
-        frameborder="0" allowfullscreen
-        style="border-radius:8px;"></iframe>`;
-}
-else if (url.match(/\.(mp4|webm|mov)$/)) {
-    mediaHtml = `<video controls onclick="openPreview('${p.url}', 'video')"
-        style="width:100%; max-width:250px; border-radius:8px;">
-        <source src="${p.url}">
-    </video>`;
-}
-else {
-    mediaHtml = `<img src="${p.url}"
-        onclick="openPreview('${p.url}', 'img')"
-        style="width:100%; max-width:250px; border-radius:8px;">`;
-}
+        if (url.includes("youtube.com") || url.includes("youtu.be")) {
+            const videoId = url.includes("v=")
+                ? url.split('v=')[1]?.split('&')[0]
+                : url.split('/').pop();
+            mediaHtml = `<iframe width="100%" height="200"
+                src="https://www.youtube.com/embed/${videoId}"
+                frameborder="0" allowfullscreen
+                style="border-radius:8px;"></iframe>`;
+        } else if (url.match(/\.(mp4|webm|mov)$/)) {
+            mediaHtml = `<video controls onclick="openPreview('${p.url}', 'video')"
+                style="width:100%; max-width:250px; border-radius:8px;">
+                <source src="${p.url}">
+            </video>`;
+        } else {
+            mediaHtml = `<img src="${p.url}"
+                onclick="openPreview('${p.url}', 'img')"
+                style="width:100%; max-width:250px; border-radius:8px;">`;
+        }
 
         return `
         <div class="${cardClass}">
@@ -473,14 +789,15 @@ else {
             </div>
             <div class="curtain-content">
                 <div style="padding:15px; text-align:center">
-                    ${mediaHtml} <div style="margin-top:10px; font-size:13px; color:#555;">
+                    ${mediaHtml}
+                    <div style="margin-top:10px; font-size:13px; color:#555;">
                         Stok: <b>${stockStatus}</b>
                     </div>
                     <div style="margin-top:5px; margin-bottom:15px; color:#333;">
                         ${p.desc}
                     </div>
                     ${!isOutOfStock ? `
-                        <a class="btn-buy-wa" href="https://wa.me/6283878843262?text=Halo, saya ingin beli ${p.name}">
+                        <a class="btn-buy-wa" href="https://wa.me/6281391676392?text=Halo, saya ingin beli ${p.name}">
                             Tanya ?
                         </a>
                     ` : '<p style="color:red; font-weight:bold;">Produk Sementara Tidak Tersedia</p>'}
@@ -491,41 +808,190 @@ else {
     }).join("");
 }
 
-
-/* ================= TOGGLE ================= */
+/* ================= TOGGLE CARD ================= */
 function toggleItem(el){
     const item = el.closest('.curtain-item');
     const isActive = item.classList.contains("active");
-
-    // Tutup semua yang lain
     document.querySelectorAll(".curtain-item").forEach(i => i.classList.remove("active"));
-
-    // Buka jika sebelumnya tidak aktif
     if(!isActive) item.classList.add("active");
 }
 
-/* ================= INIT ================= */
-fetchInventory(); 
+/* ================= UPDATE LOG MODAL ================= */
+function openUpdateLog() {
+    const modal = document.getElementById('update-log-modal');
+    modal.classList.add('open');
 
-// Update otomatis setiap 60 detik tanpa menampilkan skeleton (silent update)
+    // Reset badge
+    updateBadge(0);
+
+    renderLogBody();
+}
+
+function closeUpdateLog() {
+    document.getElementById('update-log-modal').classList.remove('open');
+}
+
+function handleLogModalBgClick(e) {
+    // Tutup jika klik di luar log-sheet
+    if (e.target === document.getElementById('update-log-modal')) closeUpdateLog();
+}
+
+function fmt(price) {
+    return 'Rp ' + Number(price).toLocaleString('id-ID');
+}
+
+function renderLogBody() {
+    const body      = document.getElementById('log-body');
+    const tsEl      = document.getElementById('log-timestamp');
+    const changes   = lastChanges;
+
+    if (!changes) {
+        body.innerHTML = `
+        <div class="log-empty">
+            <div class="log-empty-icon">📋</div>
+            <p>Belum ada data yang dimuat.</p>
+        </div>`;
+        return;
+    }
+
+    tsEl.textContent = changes.timestamp || '—';
+
+    const total = totalChanges(changes);
+
+    if (total === 0) {
+        // Cek apakah ini first load (tidak ada cache sebelumnya) atau memang tidak ada perubahan
+        const cached = loadCache();
+        body.innerHTML = `
+        <div class="log-empty">
+            <div class="log-empty-icon">✅</div>
+            <p style="font-weight:700;color:#333;">Semua data sudah up-to-date</p>
+            <p style="font-size:12px;color:#aaa;">Tidak ada perubahan stok, harga,<br>maupun produk baru sejak sesi terakhir.</p>
+        </div>
+        <p class="log-footer-note">Data diperbarui otomatis setiap 60 detik</p>`;
+        return;
+    }
+
+    let html = '';
+
+    /* ---- PRODUK BARU ---- */
+    if (changes.newItems.length > 0) {
+        html += `
+        <div class="log-section">
+            <div class="log-section-title section-new">
+                🆕 Produk Baru
+                <span style="background:#27ae60;color:#fff;border-radius:20px;padding:1px 8px;font-size:10px;">
+                    ${changes.newItems.length}
+                </span>
+            </div>`;
+
+        changes.newItems.forEach(item => {
+            html += `
+            <div class="log-item new-item">
+                <div class="item-name">${item.name}</div>
+                <div class="item-detail">
+                    <span class="tag-category">${item.category}</span>
+                    <span class="tag-price">${fmt(item.price)}</span>
+                    <span style="font-size:11px;color:#777;">Stok: <b>${item.stock > 0 ? item.stock : 'Habis'}</b></span>
+                </div>
+            </div>`;
+        });
+
+        html += `</div>`;
+    }
+
+    /* ---- PERUBAHAN HARGA ---- */
+    if (changes.priceChanges.length > 0) {
+        html += `
+        <div class="log-section">
+            <div class="log-section-title section-price">
+                💰 Perubahan Harga
+                <span style="background:#e67e22;color:#fff;border-radius:20px;padding:1px 8px;font-size:10px;">
+                    ${changes.priceChanges.length}
+                </span>
+            </div>`;
+
+        changes.priceChanges.forEach(item => {
+            const naik = item.newPrice > item.oldPrice;
+            const selisih = Math.abs(item.newPrice - item.oldPrice);
+            html += `
+            <div class="log-item price-item">
+                <div class="item-name">${item.name}</div>
+                <div class="item-detail">
+                    <span class="tag-category">${item.category}</span>
+                    <span class="tag-old">${fmt(item.oldPrice)}</span>
+                    <span class="tag-arrow">→</span>
+                    <span class="tag-new">${fmt(item.newPrice)}</span>
+                    <span style="font-size:11px;color:${naik ? '#c0392b' : '#27ae60'};">
+                        ${naik ? '▲' : '▼'} ${fmt(selisih)}
+                    </span>
+                </div>
+            </div>`;
+        });
+
+        html += `</div>`;
+    }
+
+    /* ---- PERUBAHAN STOK ---- */
+    if (changes.stockChanges.length > 0) {
+        html += `
+        <div class="log-section">
+            <div class="log-section-title section-stock">
+                📦 Perubahan Stok
+                <span style="background:#3498db;color:#fff;border-radius:20px;padding:1px 8px;font-size:10px;">
+                    ${changes.stockChanges.length}
+                </span>
+            </div>`;
+
+        changes.stockChanges.forEach(item => {
+            const naik    = item.newStock > item.oldStock;
+            const selisih = Math.abs(item.newStock - item.oldStock);
+            const labelOld = item.oldStock <= 0 ? 'Habis' : item.oldStock;
+            const labelNew = item.newStock <= 0 ? 'Habis' : item.newStock;
+            html += `
+            <div class="log-item stock-item">
+                <div class="item-name">${item.name}</div>
+                <div class="item-detail">
+                    <span class="tag-category">${item.category}</span>
+                    <span class="tag-old">${labelOld}</span>
+                    <span class="tag-arrow">→</span>
+                    <span class="tag-new">${labelNew}</span>
+                    <span class="${naik ? 'stock-up' : 'stock-down'}" style="font-size:11px;">
+                        ${naik ? '▲ +' : '▼ -'}${selisih}
+                    </span>
+                </div>
+            </div>`;
+        });
+
+        html += `</div>`;
+    }
+
+    html += `<p class="log-footer-note">Data diperbarui otomatis setiap 60 detik</p>`;
+
+    body.innerHTML = html;
+}
+
+/* ================= INIT ================= */
+fetchInventory();
+
+// Silent update tiap 60 detik
 setInterval(() => fetchInventory(true), 60000);
-let modal = document.getElementById('preview-modal');
+
+/* ================= PREVIEW MODAL ================= */
+let modal     = document.getElementById('preview-modal');
 let container = document.getElementById('preview-container');
-let scale = 1;
-let lastDist = 0;
+let scale     = 1;
+let lastDist  = 0;
 let lastScale = 1;
 
 function openPreview(src, type) {
     modal.style.display = 'flex';
-    scale = 1; // Reset zoom
+    scale = 1;
     let content = "";
-    
     if (type === 'img') {
         content = `<img src="${src}" id="preview-content" style="transform: scale(1)">`;
     } else {
         content = `<video src="${src}" id="preview-content" controls autoplay style="transform: scale(1)"></video>`;
     }
-    
     container.innerHTML = content;
     initZoom();
 }
@@ -537,10 +1003,9 @@ function closePreview() {
 
 function initZoom() {
     const el = document.getElementById('preview-content');
-    
+
     container.addEventListener('touchstart', (e) => {
         if (e.touches.length === 2) {
-            // Hitung jarak awal antara dua jari
             lastDist = Math.hypot(
                 e.touches[0].pageX - e.touches[1].pageX,
                 e.touches[0].pageY - e.touches[1].pageY
@@ -551,31 +1016,19 @@ function initZoom() {
     container.addEventListener('touchmove', (e) => {
         if (e.touches.length === 2) {
             e.preventDefault();
-            
-            // Hitung jarak baru
             const dist = Math.hypot(
                 e.touches[0].pageX - e.touches[1].pageX,
                 e.touches[0].pageY - e.touches[1].pageY
             );
-
-            // Hitung titik tengah (focal point)
             const midX = (e.touches[0].pageX + e.touches[1].pageX) / 2;
             const midY = (e.touches[0].pageY + e.touches[1].pageY) / 2;
-
-            // Atur transform origin agar mengikuti posisi jari
             const rect = el.getBoundingClientRect();
             const offsetX = ((midX - rect.left) / rect.width) * 100;
             const offsetY = ((midY - rect.top) / rect.height) * 100;
-            
             el.style.transformOrigin = `${offsetX}% ${offsetY}%`;
-
-            // Hitung skala baru
             scale = lastScale * (dist / lastDist);
-            
-            // Batasi zoom (min 1x, max 4x)
             if (scale < 1) scale = 1;
             if (scale > 4) scale = 4;
-
             el.style.transform = `scale(${scale})`;
         }
     }, { passive: false });
@@ -584,7 +1037,6 @@ function initZoom() {
         lastScale = scale;
     });
 }
-
 </script>
 
 </body>
